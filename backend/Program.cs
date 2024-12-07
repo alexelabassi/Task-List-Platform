@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,7 @@ builder.Services.AddSwaggerGen(option =>
 });
 
 builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<TaskListRepository>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))

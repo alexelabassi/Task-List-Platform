@@ -1,4 +1,8 @@
-﻿namespace DefaultNamespace;
+﻿using Task_List_Platform.Data;
+using Task_List_Platform.Dtos.TaskList;
+using Task_List_Platform.Models;
+
+namespace DefaultNamespace;
 
 public class TaskListRepository
 {
@@ -14,19 +18,26 @@ public class TaskListRepository
         return _context.TaskLists.FirstOrDefault(t => t.Id == id);
     }
 
-    public IEnumerable<TaskList> GetTaskListsForUser(int userId)
+    public IEnumerable<TaskList> GetTaskListsForUser(string userId)
     {
         return _context.TaskLists.Where(t => t.UserId == userId);
     }
 
-    public TaskList? UpdateTaskList(int id, UpdateListRequestDto updateListRequestDto)
+    public TaskList? UpdateTaskList(int id, UpdateTaskListDto updateTaskListDto)
     {
         var taskList = _context.TaskLists.FirstOrDefault(t => t.Id == id);
         if (taskList == null)
         {
             return null;
         }
-        taskList.Name = updateListRequestDto.Name;
+        taskList.Name = updateTaskListDto.Name;
+        _context.SaveChanges();
+        return taskList;
+    }
+
+    public TaskList Create(TaskList taskList)
+    {
+        _context.TaskLists.Add(taskList);
         _context.SaveChanges();
         return taskList;
     }

@@ -30,15 +30,15 @@ const Signup = () => {
                 throw new Error('Failed to register user');
             }
 
-            const responseData = await response.json();
-            console.log('User registered successfully:', responseData);
+            const data = await response.json();
+            localStorage.setItem("username", username);
+            localStorage.setItem("userId", data.id);
+            console.log('User registered successfully:', data);
         } catch (error) {
             console.error('Error:', error);
         }
         console.log('Signed up successfully!');
-        localStorage.setItem("username", username);
-        localStorage.setItem("email", email);
-        navigate('/show-lists');
+        window.location.href = '/show-lists';
     };
 
     return (

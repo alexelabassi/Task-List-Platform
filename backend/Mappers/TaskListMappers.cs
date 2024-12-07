@@ -1,6 +1,18 @@
-﻿namespace Task_List_Platform.Mappers;
+﻿using Task_List_Platform.Dtos.TaskList;
+using Task_List_Platform.Models;
 
-public class TaskListMappers
+namespace Task_List_Platform.Mappers;
+
+public static class TaskListMappers
 {
-    
+    public static TaskList ToTaskListFromCreateDto(this CreateTaskListDto createTaskListDto)
+    {
+        return new TaskList
+        {
+            Name = createTaskListDto.Name,
+            Description = createTaskListDto.Description,
+            CreatedAt = DateTime.UtcNow,
+            UserId = createTaskListDto.UserId,
+        };
+    }
 }

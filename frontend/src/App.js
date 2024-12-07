@@ -2,8 +2,8 @@ import './App.css';
 import Navbar from "./components/Navbar/Navbar.jsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import CreateList from "./pages/CreateList.jsx"
-import ShowLists from "./pages/ShowLists.jsx"
-import ListDetails from "./pages/ListDetails.jsx"
+import ShowLists from "./pages/ShowLists/ShowLists.jsx"
+import ListDetails from "./pages/ListDetails/ListDetails.jsx"
 import EditList from "./pages/EditList.jsx"
 import Login from "./pages/Login/Login.jsx"
 import Signup from "./pages/Signup/Signup.jsx"

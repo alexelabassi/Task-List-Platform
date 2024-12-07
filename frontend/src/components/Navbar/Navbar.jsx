@@ -18,7 +18,8 @@ function Navbar(props) {
                         <div class = "logout"
                             style={{cursor: 'pointer'}}
                             onClick={() => {
-                                localStorage.removeItem("username"); // Remove username from localStorage
+                                localStorage.removeItem("username");
+                                localStorage.removeItem("userId");
                                 console.log("Logged out");
 
                                 // Refresh the page

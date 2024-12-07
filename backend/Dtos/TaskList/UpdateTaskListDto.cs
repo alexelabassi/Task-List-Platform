@@ -2,5 +2,5 @@
 
 public class UpdateTaskListDto
 {
-    
+    public string Name { get; set; }
 }

@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 async function getListName(listId) {
-    const url = `https://localhost:44387/api/TaskList/${listId}`
+    const url = `https://localhost:44312/api/TaskList/${listId}`
     const response = await fetch(url);
     const data = await response.json();
     return data.name;
@@ -28,7 +28,7 @@ function EditList() {
     }, []); // setez numele initial
     useEffect(() => {
         async function fetchTasks() {
-            const url = `https://localhost:44387/tasks/${listId}`;
+            const url = `https://localhost:44312/tasks/${listId}`;
             const response = await fetch(url);
             const data = await response.json();
             setTasks(data);
@@ -44,7 +44,7 @@ function EditList() {
             alert("Name can't be empty!")
         } else {
             async function fetchPutListName() {
-                const url = `https://localhost:44387/api/TaskList/user/lists/${listId}`
+                const url = `https://localhost:44312/api/TaskList/edit/${listId}`
                 const response = await fetch(url, {
                     method: "PUT",
                     headers: {
@@ -61,7 +61,7 @@ function EditList() {
     }
 
     const handleAddTask = async () => {
-        const url = "https://localhost:44387/task/create";
+        const url = "https://localhost:44312/task/create";
         const response = await fetch(url, {
             method: "POST",
             headers: {
@@ -81,7 +81,7 @@ function EditList() {
     }
 
     const handleDelete = async (taskId) => {
-        const url = "https://localhost:44387/task/delete/" + taskId;
+        const url = "https://localhost:44312/task/delete/" + taskId;
         const response = await fetch(url, {
             method: "DELETE"
         })

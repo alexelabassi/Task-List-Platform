@@ -1,5 +1,5 @@
 import "./showlist.css"
-import ListSummary from "../components/ListSummary/ListSummary";
+import ListSummary from "../../components/ListSummary/ListSummary";
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 
@@ -8,14 +8,14 @@ function ShowLists(props) {
 
     useEffect(() => {
         async function fetchTaskLists(userId) {
-            const url = `https://localhost:44387/api/TaskList/user/lists/${userId}`
+            const url = `https://localhost:44312/api/TaskList/showAllForUser/${userId}`
             const response = await fetch(url);
             const data = await response.json();
             setTaskLists(data);
         }
 
-        if (props.userId) {
-            fetchTaskLists(props.userId)
+        if (localStorage.getItem("userId")) {
+            fetchTaskLists(localStorage.getItem("userId"));
         }
     }, [props.userId]);
 

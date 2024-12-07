@@ -10,20 +10,35 @@ function CreateList() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if(!localStorage.getItem("userId")){
+            alert("You must first be signed in!")
+            window.location.href = '/login';
+        }
+
         if (!listName.trim()) {
             setError("The list name can't be empty!");
             setSucces("")
             return;
         }
         async function PostData(){
-            const url = ``
+            const url = "https://localhost:44312/api/tasklist/create"
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: listName,
+                    description: listDescription,
+                    userId: localStorage.getItem("userId")
+                })
+            })
         }
-
+        PostData();
         setError(false);
         setSucces(`The list ${listName} has been created!`);
         setListName("");
         setListDescription("")
-        return;
     }
 
     return (

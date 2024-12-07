@@ -31,8 +31,9 @@ function Login() {
             }
             const data = await response.json();
             localStorage.setItem("username", data.username);
+            localStorage.setItem("userId", data.id);
             console.log(data);
-            navigate("/show-lists");
+            window.location.href = "/show-lists";
         }
         catch(err){
             setError("Wrong username or password");

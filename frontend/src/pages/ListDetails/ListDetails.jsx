@@ -18,13 +18,13 @@ function ListDetails(props) {
     const [listDetails, setListDetails] = useState([]);
     useEffect(() => {
         async function fetchTaskList(){
-            const url = "https://localhost:44387/api/TaskList/" + listId
+            const url = "https://localhost:44312/api/TaskList/" + listId
             const response = await fetch(url);
             const data = await response.json();
             setListDetails(data);
         }
         async function fetchTasks() {
-            const url = "https://localhost:44387/tasks/" + listId;
+            const url = "https://localhost:44312/tasks/" + listId;
             const response = await fetch(url);
             const data = await response.json();
             setTasks(data);
