@@ -41,4 +41,16 @@ public class TaskListRepository
         _context.SaveChanges();
         return taskList;
     }
+
+    public TaskList? Delete(int id)
+    {
+        var taskList = _context.TaskLists.FirstOrDefault(t => t.Id == id);
+        if (taskList == null)
+        {
+            return taskList;
+        }
+        _context.TaskLists.Remove(taskList);
+        _context.SaveChanges();
+        return taskList;
+    }
 }

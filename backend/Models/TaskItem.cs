@@ -10,6 +10,6 @@ public class TaskItem
     public string Name { get; set; } = string.Empty;
     
     // many to one cu TaskList
-    // public int TaskListId { get; set; }
-    // public TaskList TaskList { get; set; }
+    public int TaskListId { get; set; }
+    public TaskList TaskList { get; set; }
 }

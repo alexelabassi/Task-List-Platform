@@ -15,11 +15,12 @@ function Navbar(props) {
                 </li>
                 <li>
                     {props.isLoggedIn ?
-                        <div class = "logout"
+                        <div className = "logout"
                             style={{cursor: 'pointer'}}
                             onClick={() => {
                                 localStorage.removeItem("username");
                                 localStorage.removeItem("userId");
+                                localStorage.removeItem("authToken");
                                 console.log("Logged out");
 
                                 // Refresh the page

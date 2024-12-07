@@ -42,6 +42,7 @@ builder.Services.AddSwaggerGen(option =>
 
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<TaskListRepository>();
+builder.Services.AddScoped<TaskItemRepository>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))

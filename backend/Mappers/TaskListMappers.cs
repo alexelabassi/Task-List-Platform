@@ -5,14 +5,14 @@ namespace Task_List_Platform.Mappers;
 
 public static class TaskListMappers
 {
-    public static TaskList ToTaskListFromCreateDto(this CreateTaskListDto createTaskListDto)
+    public static TaskList ToTaskListFromCreateDto(this CreateTaskListDto createTaskListDto, string userId)
     {
         return new TaskList
         {
             Name = createTaskListDto.Name,
             Description = createTaskListDto.Description,
             CreatedAt = DateTime.UtcNow,
-            UserId = createTaskListDto.UserId,
+            UserId = userId,
         };
     }
 }

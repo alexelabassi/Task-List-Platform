@@ -32,6 +32,7 @@ function Login() {
             const data = await response.json();
             localStorage.setItem("username", data.username);
             localStorage.setItem("userId", data.id);
+            localStorage.setItem("authToken", data.token)
             console.log(data);
             window.location.href = "/show-lists";
         }

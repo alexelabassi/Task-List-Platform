@@ -16,8 +16,8 @@ function EditList() {
     const [initialName, setInitialName] = useState("");
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState("");
+    const [taskEdits, setTaskEdits] = useState({});
     useEffect(() => {
-        // Define an async function inside useEffect
         const fetchListName = async () => {
             const name = await getListName(listId);
             setInitialName(name);
@@ -37,6 +37,38 @@ function EditList() {
         fetchTasks();
 
     }, []);
+
+    const handleTaskEditChange = (taskId, newName) => {
+        setTaskEdits(prev => ({
+            ...prev,
+            [taskId]: newName
+        }));
+    };
+
+    const handleTaskEdits = async (e) => {
+        e.preventDefault();
+        for (const [taskId, newName] of Object.entries(taskEdits)) {
+            const url = `https://localhost:44312/task/update/${taskId}`;
+            const response = await fetch(url, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name: newName })
+            });
+
+            if (!response.ok) {
+                alert(`Failed to edit task with ID ${taskId}`);
+            } else {
+                const updatedTask = await response.json();
+                setTasks(tasks.map(task =>
+                    task.id === taskId ? updatedTask : task
+                ));
+            }
+        }
+        setTaskEdits({});
+    };
+
     const handleSaveTitle = (e) => {
         console.log(listName);
         if (listName == "") {
@@ -77,6 +109,7 @@ function EditList() {
         } else {
             const newTask = await response.json()
             setTasks([...tasks, newTask])
+            setNewTask("")
         }
     }
 
@@ -116,6 +149,7 @@ function EditList() {
                                 type="text"
                                 className="task-name-input"
                                 placeholder={task.name}
+                                onChange={(e) => handleTaskEditChange(task.id, e.target.value)}
                             />
                             <button className="delete-task-button" onClick={(e) => handleDelete(task.id)}>Delete
                             </button>
@@ -128,13 +162,14 @@ function EditList() {
                         type="text"
                         className="new-task-input"
                         placeholder="New task name"
+                        value = {newTask}
                         onChange={(e) => setNewTask(e.target.value)}
                     />
                     <button className="add-task-button" onClick={handleAddTask}>Add Task</button>
                 </div>
             </section>
             <footer>
-                <button className="save-changes-button">
+                <button className="save-changes-button" onClick={handleTaskEdits}>
                     Save Task Edits
                 </button>
             </footer>

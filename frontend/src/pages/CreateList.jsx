@@ -25,6 +25,7 @@ function CreateList() {
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
+                    Authorization: `Bearer ${localStorage.getItem("authToken")}`,
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({

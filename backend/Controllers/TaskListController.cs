@@ -1,7 +1,10 @@
 ﻿using DefaultNamespace;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Task_List_Platform.Dtos.TaskList;
 using Task_List_Platform.Mappers;
+using Task_List_Platform.Models;
 
 namespace Task_List_Platform.Controllers;
 
@@ -10,10 +13,11 @@ namespace Task_List_Platform.Controllers;
 public class TaskListController : ControllerBase
 {
     private readonly TaskListRepository _taskListRepo;
-
-    public TaskListController(TaskListRepository taskListRepo)
+    private readonly UserManager<ApplicationUser> _userManager;
+    public TaskListController(TaskListRepository taskListRepo, UserManager<ApplicationUser> userManager)
     {
         _taskListRepo = taskListRepo;
+        _userManager = userManager;
     }
 
     [HttpGet("{id}")]
@@ -56,10 +60,39 @@ public class TaskListController : ControllerBase
 
     [HttpPost]
     [Route("create")]
+    [Authorize]
     public IActionResult CreateTaskList([FromBody] CreateTaskListDto createTaskListDto)
     {
-        var taskList = createTaskListDto.ToTaskListFromCreateDto();
+        var userId = _userManager.GetUserId(User);
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+        var taskList = createTaskListDto.ToTaskListFromCreateDto(userId);
         _taskListRepo.Create(taskList);
+        return Ok(taskList);
+    }
+
+    [HttpDelete]
+    [Route("delete/{id}")]
+    [Authorize]
+    public IActionResult DeleteTaskList([FromRoute] int id)
+    {
+        var userId = _userManager.GetUserId(User);
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+        var taskList = _taskListRepo.GetTaskListById(id);
+        if (taskList.UserId != userId)
+        {
+            return Unauthorized();
+        }
+        _taskListRepo.Delete(id);
+        if (taskList == null)
+        {
+            return NotFound();
+        }
         return Ok(taskList);
     }
 }

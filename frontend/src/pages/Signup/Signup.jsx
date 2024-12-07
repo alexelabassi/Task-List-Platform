@@ -7,7 +7,7 @@ const Signup = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const navigate = useNavigate(); // Hook for navigation
+    const navigate = useNavigate();
 
     const handleSignup = async (e) => {
         e.preventDefault();
@@ -31,8 +31,9 @@ const Signup = () => {
             }
 
             const data = await response.json();
-            localStorage.setItem("username", username);
+            localStorage.setItem("username", data.username);
             localStorage.setItem("userId", data.id);
+            localStorage.setItem("authToken", data.token)
             console.log('User registered successfully:', data);
         } catch (error) {
             console.error('Error:', error);
