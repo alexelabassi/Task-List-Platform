@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "",
+"RedirectUrl": "",
+"LaunchCommand": "",
+"WorkingDirectory": "D:\\Info\\Proiecte\\Task List Platform\\backend",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}
